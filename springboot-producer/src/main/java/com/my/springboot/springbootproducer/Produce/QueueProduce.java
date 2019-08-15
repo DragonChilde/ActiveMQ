@@ -2,6 +2,7 @@ package com.my.springboot.springbootproducer.Produce;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsMessagingTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.jms.Queue;
@@ -23,5 +24,12 @@ public class QueueProduce {
 
     public void produceMessage(){
         jmsMessagingTemplate.convertAndSend(queue,UUID.randomUUID().toString().substring(0,6));
+    }
+
+    /*设置定时发送*/
+    @Scheduled(fixedDelay = 3000L)  /*每3秒发送一次*/
+    public void produceMessageSchedule(){
+        jmsMessagingTemplate.convertAndSend(queue,"*********Schedule:"+UUID.randomUUID().toString().substring(0,6));
+        System.out.println("定时发送完成!");
     }
 }

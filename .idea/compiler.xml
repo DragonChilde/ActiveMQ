@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ActiveMQ" />
+        <module name="springboot-consumer" />
         <module name="springboot-producer" />
       </profile>
     </annotationProcessing>
@@ -17,7 +18,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Springboot-Producer" options="-parameters" />
-      <module name="springboot-producer" options="-parameters" />
+      <module name="springboot-producer" options="" />
     </option>
   </component>
 </project>

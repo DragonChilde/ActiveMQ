@@ -6,14 +6,15 @@ import javax.jms.*;
 
 /**
  * @author Lee
- * @create 2019/8/7 15:35
+ * @create 2019/8/21 11:00
  */
-public class JmsProduce {
+public class JmsProducePersistent {
+
     //设置目的地址URL
-   // private static final String ACTIVE_URL = "tcp://120.77.237.175:61616";
     private static final String ACTIVE_URL = "nio://120.77.237.175:61619";
+    //private static final String ACTIVE_URL = "nio://120.77.237.175:61619";
     //设置队列名称
-    private static final String QUEUE = "queue01";
+    private static final String QUEUE = "queue_persistent";
 
 
     public static void main(String[] args) throws Exception {
@@ -29,6 +30,7 @@ public class JmsProduce {
         Queue queue = session.createQueue(QUEUE);
         //5创建消息生产者
         MessageProducer messageProducer = session.createProducer(queue);
+        messageProducer.setDeliveryMode(DeliveryMode.PERSISTENT);
         //6通过使用messageProducer生产3条消息发送到MQ的队列里面
         for (int i = 1; i <= 3; i++) {
             //7创建消息,

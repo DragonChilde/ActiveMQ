@@ -11,9 +11,11 @@ import java.time.Year;
  */
 public class JmsConsumer {
     //设置目的地址URL
-    private static final String ACTIVE_URL = "tcp://120.77.237.175:61616";
+    private static final String ACTIVE_URL = "nio://120.77.237.175:61619";
+    //private static final String ACTIVE_URL = "nio://120.77.237.175:61619";
+
     //设置队列名称
-    private static final String QUEUE = "queue01";
+    private static final String QUEUE = "queue_schedule";
 
     public static void main(String[] args) throws Exception {
         //1创建连接工厂,按照给定的url地址,采用默认用户名和密码

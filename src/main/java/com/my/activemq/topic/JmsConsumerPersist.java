@@ -10,9 +10,9 @@ import javax.jms.*;
  */
 public class JmsConsumerPersist {
     //设置目的地址URL
-    private static final String ACTIVE_URL = "tcp://120.77.237.175:61616";
+    private static final String ACTIVE_URL = "tcp://120.77.237.175:61619";
     //设置队列名称
-    private static final String TOPIC = "topic01";
+    private static final String TOPIC = "topic_persistent";
 
     public static void main(String[] args) throws Exception {
 

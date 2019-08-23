@@ -1,20 +1,21 @@
 package com.my.activemq.queue;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.ScheduledMessage;
 
 import javax.jms.*;
 
 /**
  * @author Lee
- * @create 2019/8/7 15:35
+ * @create 2019/8/22 15:02
  */
-public class JmsProduce {
-    //设置目的地址URL
-   // private static final String ACTIVE_URL = "tcp://120.77.237.175:61616";
-    private static final String ACTIVE_URL = "nio://120.77.237.175:61619";
-    //设置队列名称
-    private static final String QUEUE = "queue01";
+public class JmsProduceSchedule {
 
+    //设置目的地址URL
+    private static final String ACTIVE_URL = "nio://120.77.237.175:61619";
+    //private static final String ACTIVE_URL = "nio://120.77.237.175:61619";
+    //设置队列名称
+    private static final String QUEUE = "queue_schedule";
 
     public static void main(String[] args) throws Exception {
         //1创建连接工厂,按照给定的url地址,采用默认用户名和密码
@@ -29,23 +30,22 @@ public class JmsProduce {
         Queue queue = session.createQueue(QUEUE);
         //5创建消息生产者
         MessageProducer messageProducer = session.createProducer(queue);
+
+        long delay = 3 * 1000;
+        long period = 4 * 1000;
+        int repeat = 5;
+
+        messageProducer.setDeliveryMode(DeliveryMode.PERSISTENT);
         //6通过使用messageProducer生产3条消息发送到MQ的队列里面
         for (int i = 1; i <= 3; i++) {
-            //7创建消息,
-
             TextMessage textMessage = session.createTextMessage("msg is " + i);//可以理解发送字符串
-//            textMessage.setStringProperty("vip","1");
-//            textMessage.setJMSDeliveryMode();
-//            textMessage.setJMSDestination();
-//            textMessage.setJMSPriority();
-//            textMessage.setJMSMessageID();
-//            textMessage.setJMSExpiration();
+            textMessage.setLongProperty(ScheduledMessage.AMQ_SCHEDULED_DELAY,delay);
+            textMessage.setLongProperty(ScheduledMessage.AMQ_SCHEDULED_PERIOD,period);
+            textMessage.setIntProperty(ScheduledMessage.AMQ_SCHEDULED_REPEAT,repeat);
+
             messageProducer.send(textMessage);
         }
-//
-//        MapMessage mapMessage = session.createMapMessage();
-//        mapMessage.setString("key","value");
-//        messageProducer.send(mapMessage);
+
         //9.关闭资源
         messageProducer.close();
         session.close();
